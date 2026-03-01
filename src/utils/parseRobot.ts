@@ -44,7 +44,9 @@ export const parseRobot = (
 
   const instructions = parseInstructions(instructionLine);
   if (!instructions) {
-    throw new Error(`Invalid instructions: "${instructionLine}"`);
+    throw new Error(
+      `Invalid instructions: "${instructionLine.length < INSTRUCTIONS_MAX_LENGHT ? instructionLine : 'too long'}"`
+    );
   }
 
   return { position, direction, instructions };
