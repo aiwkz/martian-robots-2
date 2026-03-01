@@ -31,10 +31,12 @@ export const runInstructions = (
     const nextX = state.position.x + dx;
     const nextY = state.position.y + dy;
 
-    const scentKey = state.position.toKey();
-
     if (!grid.isWithinBounds(nextX, nextY)) {
-      if (scented.has(scentKey)) continue;
+      const scentKey = state.position.toKey();
+
+      if (scented.has(scentKey)) {
+        continue;
+      }
 
       scented.add(scentKey);
       state.lost = true;

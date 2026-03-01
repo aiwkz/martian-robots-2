@@ -1,39 +1,51 @@
-import type { RobotInput, Direction } from '../types';
+import type { RobotInput, Direction, Instruction } from '../types';
 import { Position } from '../domain/Position';
-import { DIRECTIONS, INSTRUCTIONS } from '../constants';
-import { INSTRUCTIONS_MAX_LENGHT } from '../constants';
+import {
+  DIRECTIONS,
+  INSTRUCTIONS,
+  INSTRUCTIONS_MAX_LENGHT,
+} from '../constants';
+
+const parseDirection = (direction: string): Direction | null =>
+  DIRECTIONS.includes(direction as Direction) ? (direction as Direction) : null;
+
+const parseInstructions = (instructions: string): Instruction[] | null => {
+  const chars = instructions.trim().split('');
+
+  if (chars.length === 0 || chars.length > INSTRUCTIONS_MAX_LENGHT) {
+    return null;
+  }
+
+  if (!chars.every(char => INSTRUCTIONS.includes(char))) {
+    return null;
+  }
+
+  return chars as Instruction[];
+};
 
 export const parseRobot = (
   positionLine: string,
   instructionLine: string
-): RobotInput | null => {
-  const parts = positionLine.split(/\s+/);
-  if (parts.length !== 3) return null;
-
-  const x = Number(parts[0]);
-  const y = Number(parts[1]);
-  const direction = parts[2] as Direction;
-
-  const position = Position.tryCreate(x, y);
-  if (!position) return null;
-
-  if (!DIRECTIONS.includes(direction)) return null;
-
-  const instructions = instructionLine.trim().split('');
-  if (
-    instructions.length === 0 ||
-    instructions.length > INSTRUCTIONS_MAX_LENGHT
-  ) {
-    return null;
+): RobotInput => {
+  const parts = positionLine.trim().split(/\s+/);
+  if (parts.length !== 3) {
+    throw new Error(`Invalid robot position line: "${positionLine}"`);
   }
 
-  for (const instruction of instructions) {
-    if (!INSTRUCTIONS.includes(instruction)) return null;
+  const position = Position.tryCreate(Number(parts[0]), Number(parts[1]));
+  if (!position) {
+    throw new Error(`Invalid robot coordinates: "${parts[0]} ${parts[1]}"`);
   }
 
-  return {
-    position,
-    direction,
-    instructions: instructions as RobotInput['instructions'],
-  };
+  const direction = parseDirection(parts[2]);
+  if (!direction) {
+    throw new Error(`Invalid direction: "${parts[2]}"`);
+  }
+
+  const instructions = parseInstructions(instructionLine);
+  if (!instructions) {
+    throw new Error(`Invalid instructions: "${instructionLine}"`);
+  }
+
+  return { position, direction, instructions };
 };
