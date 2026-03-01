@@ -1,4 +1,4 @@
-import type { ParsedInput, RobotInput } from '../types';
+import type { ParsedInput } from '../types';
 import { Grid } from '../domain/Grid';
 import { parseRobot } from './parseRobot';
 
@@ -19,17 +19,15 @@ export const inputParser = (input: string): ParsedInput => {
 
   const grid = Grid.create(maxX, maxY);
 
-  const robots: RobotInput[] = [];
+  const robots = [];
 
   for (let i = 1; i < lines.length; i += 2) {
     const positionLine = lines[i];
     const instructionLine = lines[i + 1];
 
-    if (!instructionLine) continue;
+    if (!instructionLine) throw new Error(`Robot at line ${i + 1} has no instruction line`);
 
     const robot = parseRobot(positionLine, instructionLine);
-    if (!robot) continue;
-
     robots.push(robot);
   }
 
