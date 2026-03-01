@@ -9,9 +9,9 @@ export const inputParser = (input: string): ParsedInput => {
 
   const lines = input.trim().split('\n').filter(Boolean);
 
-  const gridLimits = lines[0].split(/\s+/);
+  const gridLimits = lines[0].trim().split(/\s+/);
   if (gridLimits.length !== 2) {
-    throw new Error('Grid values should be only two values, X and Y');
+    throw new Error('Grid values should be two values for X and Y');
   }
 
   const maxX = Number(gridLimits[0]);
@@ -25,7 +25,8 @@ export const inputParser = (input: string): ParsedInput => {
     const positionLine = lines[i];
     const instructionLine = lines[i + 1];
 
-    if (!instructionLine) throw new Error(`Robot at line ${i + 1} has no instruction line`);
+    if (!instructionLine)
+      throw new Error(`Robot at line ${i + 1} has no instruction line`);
 
     const robot = parseRobot(positionLine, instructionLine);
     robots.push(robot);
