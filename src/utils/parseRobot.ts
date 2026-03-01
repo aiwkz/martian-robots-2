@@ -8,8 +8,8 @@ export const parseRobot = (
   const initialPosition = positionLine.split(/\s+/);
   if (initialPosition.length !== 3) return null;
 
-  const x = parseInt(initialPosition[0], 10);
-  const y = parseInt(initialPosition[1], 10);
+  const x = Number(initialPosition[0]);
+  const y = Number(initialPosition[1]);
   const direction = initialPosition[2] as Direction;
 
   if (

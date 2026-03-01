@@ -1,4 +1,5 @@
-import type { RobotInput, RobotState, Grid } from '../types';
+import type { RobotInput, RobotState } from '../types';
+import type { Grid } from '../domain/Grid';
 import { LEFT_TURN, RIGHT_TURN, MOVE_FORWARD } from './helpers';
 
 export const runInstructions = (
@@ -32,7 +33,7 @@ export const runInstructions = (
 
     const scentKey = `${state.x},${state.y}`;
 
-    if (nextX < 0 || nextY < 0 || nextX > grid.maxX || nextY > grid.maxY) {
+    if (!grid.isWithinBounds(nextX, nextY)) {
       if (scented.has(scentKey)) {
         continue;
       }

@@ -1,10 +1,7 @@
+import type { Grid } from './domain/Grid';
+
 export type Direction = 'N' | 'E' | 'S' | 'W';
 export type Instruction = 'L' | 'R' | 'F';
-
-export interface Grid {
-  maxX: number;
-  maxY: number;
-}
 
 export interface RobotInput {
   x: number;
