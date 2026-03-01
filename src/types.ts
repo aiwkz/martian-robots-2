@@ -25,3 +25,9 @@ export type FormattedResult = {
   text: string;
   lost: boolean;
 };
+
+export type InstructionHandler = (
+  state: RobotState,
+  grid: Grid,
+  scented: Set<string>
+) => RobotState;
