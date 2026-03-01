@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { FormattedResult } from '../../types';
 import { inputParser } from '../../utils/inputParser';
 import { runInstructions } from '../../utils/runInstructions';
 import { formatResult } from '../../utils/formatResult';
@@ -7,7 +8,7 @@ import './input.css';
 
 const Input = () => {
   const [input, setInput] = useState('');
-  const [output, setOutput] = useState<{ text: string; lost: boolean }[]>([]);
+  const [output, setOutput] = useState<FormattedResult[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const handleRun = () => {

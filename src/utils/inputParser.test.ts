@@ -31,19 +31,19 @@ describe('inputParser() — error paths', () => {
 
   it('throws when grid line has 1 value', () => {
     expect(() => inputParser('5\n1 1 E\nF')).toThrow(
-      'Grid values should be two values'
+      'Grid coordinates should be two values'
     );
   });
 
   it('throws when grid line has 3+ values', () => {
     expect(() => inputParser('5 3 1\n1 1 E\nF')).toThrow(
-      'Grid values should be two values'
+      'Grid coordinates should be two values'
     );
   });
 
   it('throws when grid line has one value with trailing space', () => {
     expect(() => inputParser('5 \n1 1 E\nF')).toThrow(
-      'Grid values should be two values'
+      'Grid coordinates should be two values'
     );
   });
 

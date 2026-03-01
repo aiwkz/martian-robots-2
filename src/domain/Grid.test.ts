@@ -22,34 +22,38 @@ describe('Grid.create()', () => {
 
   it('throws on negative X', () => {
     expect(() => Grid.create(-1, 3)).toThrow(
-      'Grid values must be positive numbers'
+      'Grid coordinates must be positive numbers'
     );
   });
 
   it('throws on negative Y', () => {
     expect(() => Grid.create(5, -1)).toThrow(
-      'Grid values must be positive numbers'
+      'Grid coordinates must be positive numbers'
     );
   });
 
   it('throws on NaN X', () => {
     expect(() => Grid.create(NaN, 3)).toThrow(
-      'Grid values must be positive numbers'
+      'Grid coordinates must be positive numbers'
     );
   });
 
   it('throws on NaN Y', () => {
     expect(() => Grid.create(5, NaN)).toThrow(
-      'Grid values must be positive numbers'
+      'Grid coordinates must be positive numbers'
     );
   });
 
   it('throws when X exceeds 50', () => {
-    expect(() => Grid.create(51, 3)).toThrow('Grid values exceed limit of 50');
+    expect(() => Grid.create(51, 3)).toThrow(
+      'Grid coordinates exceed limit of 50'
+    );
   });
 
   it('throws when Y exceeds 50', () => {
-    expect(() => Grid.create(5, 51)).toThrow('Grid values exceed limit of 50');
+    expect(() => Grid.create(5, 51)).toThrow(
+      'Grid coordinates exceed limit of 50'
+    );
   });
 });
 

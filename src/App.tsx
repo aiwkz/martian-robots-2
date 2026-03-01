@@ -1,4 +1,4 @@
-import Input from './components/Input/input';
+import Input from './components/Input';
 import './App.css';
 
 const App = () => {

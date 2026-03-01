@@ -11,10 +11,10 @@ export class Grid {
 
   static create(maxX: number, maxY: number): Grid {
     if (Number.isNaN(maxX) || Number.isNaN(maxY) || maxX < 0 || maxY < 0) {
-      throw new Error('Grid values must be positive numbers');
+      throw new Error('Grid coordinates must be positive numbers');
     }
     if (maxX > MAX_COORDINATE_VALUE || maxY > MAX_COORDINATE_VALUE) {
-      throw new Error('Grid values exceed limit of 50');
+      throw new Error('Grid coordinates exceed limit of 50');
     }
     return new Grid(maxX, maxY);
   }

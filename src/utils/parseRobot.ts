@@ -3,7 +3,7 @@ import { Position } from '../domain/Position';
 import {
   DIRECTIONS,
   INSTRUCTIONS,
-  INSTRUCTIONS_MAX_LENGHT,
+  INSTRUCTIONS_MAX_LENGTH,
 } from '../constants';
 
 const parseDirection = (direction: string): Direction | null =>
@@ -12,7 +12,7 @@ const parseDirection = (direction: string): Direction | null =>
 const parseInstructions = (instructions: string): Instruction[] | null => {
   const chars = instructions.trim().split('');
 
-  if (chars.length === 0 || chars.length > INSTRUCTIONS_MAX_LENGHT) {
+  if (chars.length === 0 || chars.length > INSTRUCTIONS_MAX_LENGTH) {
     return null;
   }
 
@@ -45,7 +45,7 @@ export const parseRobot = (
   const instructions = parseInstructions(instructionLine);
   if (!instructions) {
     throw new Error(
-      `Invalid instructions: "${instructionLine.length < INSTRUCTIONS_MAX_LENGHT ? instructionLine : 'too long'}"`
+      `Invalid instructions: "${instructionLine.length < INSTRUCTIONS_MAX_LENGTH ? instructionLine : 'too long'}"`
     );
   }
 

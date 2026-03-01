@@ -11,7 +11,7 @@ export const inputParser = (input: string): ParsedInput => {
 
   const gridLimits = lines[0].trim().split(/\s+/);
   if (gridLimits.length !== 2) {
-    throw new Error('Grid values should be two values for X and Y');
+    throw new Error('Grid coordinates should be two values for X and Y');
   }
 
   const maxX = Number(gridLimits[0]);
