@@ -1,14 +1,11 @@
+import type { Grid } from './domain/Grid';
+import type { Position } from './domain/Position';
+
 export type Direction = 'N' | 'E' | 'S' | 'W';
 export type Instruction = 'L' | 'R' | 'F';
 
-export interface Grid {
-  maxX: number;
-  maxY: number;
-}
-
 export interface RobotInput {
-  x: number;
-  y: number;
+  position: Position;
   direction: Direction;
   instructions: Instruction[];
 }
@@ -19,8 +16,7 @@ export interface ParsedInput {
 }
 
 export interface RobotState {
-  x: number;
-  y: number;
+  position: Position;
   direction: Direction;
   lost: boolean;
 }

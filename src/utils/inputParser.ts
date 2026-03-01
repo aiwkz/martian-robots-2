@@ -1,5 +1,5 @@
-import type { Grid, ParsedInput, RobotInput } from '../types';
-import { MAX_COORDINATE_VALUE } from '../constants';
+import type { ParsedInput, RobotInput } from '../types';
+import { Grid } from '../domain/Grid';
 import { parseRobot } from './parseRobot';
 
 export const inputParser = (input: string): ParsedInput => {
@@ -14,18 +14,10 @@ export const inputParser = (input: string): ParsedInput => {
     throw new Error('Grid values should be only two values, X and Y');
   }
 
-  const maxX = parseInt(gridLimits[0], 10);
-  const maxY = parseInt(gridLimits[1], 10);
+  const maxX = Number(gridLimits[0]);
+  const maxY = Number(gridLimits[1]);
 
-  if (Number.isNaN(maxX) || Number.isNaN(maxY) || maxX < 0 || maxY < 0) {
-    throw new Error("Grid values can't be not a number or negative");
-  }
-
-  if (maxX > MAX_COORDINATE_VALUE || maxY > MAX_COORDINATE_VALUE) {
-    throw new Error('Grid values exceed limit of 50');
-  }
-
-  const grid: Grid = { maxX, maxY };
+  const grid = Grid.create(maxX, maxY);
 
   const robots: RobotInput[] = [];
 

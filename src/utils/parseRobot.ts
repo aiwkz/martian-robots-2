@@ -1,44 +1,38 @@
 import type { RobotInput, Direction } from '../types';
-import { MAX_COORDINATE_VALUE, DIRECTIONS, INSTRUCTIONS } from '../constants';
+import { Position } from '../domain/Position';
+import { DIRECTIONS, INSTRUCTIONS } from '../constants';
+import { INSTRUCTIONS_MAX_LENGHT } from '../constants';
 
 export const parseRobot = (
   positionLine: string,
   instructionLine: string
 ): RobotInput | null => {
-  const initialPosition = positionLine.split(/\s+/);
-  if (initialPosition.length !== 3) return null;
+  const parts = positionLine.split(/\s+/);
+  if (parts.length !== 3) return null;
 
-  const x = parseInt(initialPosition[0], 10);
-  const y = parseInt(initialPosition[1], 10);
-  const direction = initialPosition[2] as Direction;
+  const x = Number(parts[0]);
+  const y = Number(parts[1]);
+  const direction = parts[2] as Direction;
 
+  const position = Position.tryCreate(x, y);
+  if (!position) return null;
+
+  if (!DIRECTIONS.includes(direction)) return null;
+
+  const instructions = instructionLine.trim().split('');
   if (
-    Number.isNaN(x) ||
-    Number.isNaN(y) ||
-    x < 0 ||
-    y < 0 ||
-    x > MAX_COORDINATE_VALUE ||
-    y > MAX_COORDINATE_VALUE
+    instructions.length === 0 ||
+    instructions.length > INSTRUCTIONS_MAX_LENGHT
   ) {
     return null;
   }
 
-  if (!DIRECTIONS.includes(direction)) {
-    return null;
-  }
-
-  const instructions = instructionLine.trim().split('');
-  if (instructions.length === 0) return null;
-
   for (const instruction of instructions) {
-    if (!INSTRUCTIONS.includes(instruction)) {
-      return null;
-    }
+    if (!INSTRUCTIONS.includes(instruction)) return null;
   }
 
   return {
-    x,
-    y,
+    position,
     direction,
     instructions: instructions as RobotInput['instructions'],
   };

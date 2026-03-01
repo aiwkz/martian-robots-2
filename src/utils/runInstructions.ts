@@ -1,4 +1,6 @@
-import type { RobotInput, RobotState, Grid } from '../types';
+import type { RobotInput, RobotState } from '../types';
+import type { Grid } from '../domain/Grid';
+import { Position } from '../domain/Position';
 import { LEFT_TURN, RIGHT_TURN, MOVE_FORWARD } from './helpers';
 
 export const runInstructions = (
@@ -7,8 +9,7 @@ export const runInstructions = (
   scented: Set<string>
 ): RobotState => {
   const state: RobotState = {
-    x: robot.x,
-    y: robot.y,
+    position: robot.position,
     direction: robot.direction,
     lost: false,
   };
@@ -27,23 +28,20 @@ export const runInstructions = (
     }
 
     const { dx, dy } = MOVE_FORWARD[state.direction];
-    const nextX = state.x + dx;
-    const nextY = state.y + dy;
+    const nextX = state.position.x + dx;
+    const nextY = state.position.y + dy;
 
-    const scentKey = `${state.x},${state.y}`;
+    const scentKey = state.position.toKey();
 
-    if (nextX < 0 || nextY < 0 || nextX > grid.maxX || nextY > grid.maxY) {
-      if (scented.has(scentKey)) {
-        continue;
-      }
+    if (!grid.isWithinBounds(nextX, nextY)) {
+      if (scented.has(scentKey)) continue;
 
       scented.add(scentKey);
       state.lost = true;
       break;
     }
 
-    state.x = nextX;
-    state.y = nextY;
+    state.position = Position.create(nextX, nextY);
   }
 
   return state;
