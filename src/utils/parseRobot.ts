@@ -1,6 +1,7 @@
 import type { RobotInput, Direction } from '../types';
 import { Position } from '../domain/Position';
 import { DIRECTIONS, INSTRUCTIONS } from '../constants';
+import { INSTRUCTIONS_MAX_LENGHT } from '../constants';
 
 export const parseRobot = (
   positionLine: string,
@@ -19,7 +20,12 @@ export const parseRobot = (
   if (!DIRECTIONS.includes(direction)) return null;
 
   const instructions = instructionLine.trim().split('');
-  if (instructions.length === 0) return null;
+  if (
+    instructions.length === 0 ||
+    instructions.length > INSTRUCTIONS_MAX_LENGHT
+  ) {
+    return null;
+  }
 
   for (const instruction of instructions) {
     if (!INSTRUCTIONS.includes(instruction)) return null;
