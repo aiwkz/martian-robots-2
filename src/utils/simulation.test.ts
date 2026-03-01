@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { inputParser } from './utils/inputParser';
-import { runInstructions } from './utils/runInstructions';
-import { formatResult } from './utils/formatResult';
+import { inputParser } from '../utils/inputParser';
+import { runInstructions } from '../utils/runInstructions';
+import { formatResult } from '../utils/formatResult';
 
 const runSimulation = (input: string) => {
   const { grid, robots } = inputParser(input);
